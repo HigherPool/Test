@@ -1,34 +1,46 @@
 package test.lx.com;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Test {
-	
-	public static void printThingsUppercaseStrings (List things){
-	    int i = 0;
-	    try {
-	        while(true){
-	            Object o = things.get(i);
-	            System.out.println(o);
-	            if(o.getClass() == String.class){
-	                String so = (String) o;
-	                so = so.toUpperCase();
-	                System.out.println(so);
-	            }
-	            i++;
-	        }
-	    } catch (IndexOutOfBoundsException e){
-	        //iteration complete
-	    }
-	}
-	
+
 	public static void main(String[] args) {
-		List things = new ArrayList();
-		things.add(1);
-		things.add("e");
-		printThingsUppercaseStrings(things);
-		
+		Date one = new Date();
+		int num = differentDays(one, one);
+
+	}
+
+	public static int differentDays(Date date1, Date date2) {
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(date1);
+
+		Calendar cal2 = Calendar.getInstance();
+		cal2.setTime(date2);
+		int day1 = cal1.get(Calendar.DAY_OF_YEAR);
+		int day2 = cal2.get(Calendar.DAY_OF_YEAR);
+
+		int year1 = 2020;
+		int year2 = 2019;
+		if (year1 != year2) // 不同年
+		{
+			int timeDistance = 0;
+			for (int i = year1; i < year2; i++) {
+				if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) // 闰年
+				{
+					timeDistance += 366;
+				} else // 不是闰年
+				{
+					timeDistance += 365;
+				}
+			}
+
+			return timeDistance + (day2 - day1);
+		} else // 同年
+		{
+			System.out.println("判断day2 - day1 : " + (day2 - day1));
+			return day2 - day1;
+		}
 	}
 
 }
